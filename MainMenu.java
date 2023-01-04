@@ -26,13 +26,14 @@ import java.awt.event.ActionListener;
 // Number input filtering
 import javax.swing.text.NumberFormatter;
 
+import ImgUtils.MyCanvas;
 public class MainMenu {
 
   public static int MAX_IMG_SIZE = 1280;
   public static void main(String[] args) {
     // Create a new JFrame
     JFrame frame = new JFrame("ImaJedit");
-
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     // Set the layout of the frame to be a GridBagLayout
     frame.setLayout(new GridBagLayout());
 
@@ -135,6 +136,7 @@ public class MainMenu {
             File selectedFile = fileChooser.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             // TODO: OPEN IMAGE HERE
+            MyCanvas.ImageCanvasFrame(selectedFile.getAbsolutePath());
         }
       }
     });
