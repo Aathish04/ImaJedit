@@ -27,9 +27,8 @@ import java.awt.event.ActionListener;
 import javax.swing.text.NumberFormatter;
 
 import ImgUtils.MyCanvas;
+import ImgUtils.CONSTANTS;
 public class MainMenu {
-
-  public static int MAX_IMG_SIZE = 1280;
   public static void main(String[] args) {
     // Create a new JFrame
     JFrame frame = new JFrame("ImaJedit");
@@ -70,7 +69,7 @@ public class MainMenu {
     constraints.anchor = GridBagConstraints.WEST;
 
     // Create the "widthspinner" and add it to the frame
-    SpinnerNumberModel widthSpinnerModel = new SpinnerNumberModel(640, 1, MAX_IMG_SIZE, 1);
+    SpinnerNumberModel widthSpinnerModel = new SpinnerNumberModel(640, 1, CONSTANTS.MAX_IMG_SIZE, 1);
     JSpinner widthSpinner = new JSpinner(widthSpinnerModel);
     ((NumberFormatter)(
         (JSpinner.NumberEditor)widthSpinner.getEditor()
@@ -95,7 +94,7 @@ public class MainMenu {
     constraints.anchor = GridBagConstraints.WEST;
 
     // Create the "heightspinner" and add it to the frame
-    SpinnerNumberModel heightSpinnerModel = new SpinnerNumberModel(480, 1, MAX_IMG_SIZE, 1);
+    SpinnerNumberModel heightSpinnerModel = new SpinnerNumberModel(480, 1, CONSTANTS.MAX_IMG_SIZE, 1);
     JSpinner heightSpinner = new JSpinner(heightSpinnerModel);
     ((NumberFormatter)(
         (JSpinner.NumberEditor)heightSpinner.getEditor()

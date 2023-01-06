@@ -6,7 +6,20 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import ImgUtils.CONSTANTS;
+
 public class MyCanvas {
+
+  public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
+    Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+    BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+
+    Graphics2D g2d = dimg.createGraphics();
+    g2d.drawImage(tmp, 0, 0, null);
+    g2d.dispose();
+
+    return dimg;
+}  
 
   public static void ImageCanvasFrame(String path) {
     JFrame frame = new JFrame(); //JFrame Creation
@@ -21,6 +34,19 @@ public class MyCanvas {
       bimg = ImageIO.read(new File(path));
       width = bimg.getWidth();
       height = bimg.getHeight();
+
+      if(height>CONSTANTS.MAX_IMG_SIZE){
+
+        bimg = resize(bimg,(int)(width/height)*CONSTANTS.MAX_IMG_SIZE, CONSTANTS.MAX_IMG_SIZE);
+        width = bimg.getWidth();
+        height = bimg.getHeight();
+      }
+      if(width>CONSTANTS.MAX_IMG_SIZE){
+        bimg = resize(bimg,CONSTANTS.MAX_IMG_SIZE,(int)(height/width)*CONSTANTS.MAX_IMG_SIZE);
+        width = bimg.getWidth();
+        height = bimg.getHeight();
+      }
+
       frame.setBounds(0, 0, width + 100, height + 50); //Sets the position of the frame
 
       Container c = frame.getContentPane(); //Gets the content layer
@@ -38,7 +64,7 @@ public class MyCanvas {
       ImageIO.write(bimg, "png", outputfile);
     } catch (Exception e) {
       //never enters here
-      System.out.println("NOOOOOOO");
+      System.out.println(e);
     }
   }
 }
