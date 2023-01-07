@@ -64,7 +64,7 @@ public class MyCanvas {
       Dimension size = label.getPreferredSize(); //Gets the size of the image
       label.setBounds(0, 0, size.width, size.height); //Sets the location of the image
 
-      frame.add(label); //Adds objects to the frame
+      // frame.add(label); //Adds objects to the frame
       Palette content = new Palette(bimg);
       frame.setContentPane(content);
       frame.setVisible(true); // Exhibit the frame

@@ -2,8 +2,14 @@ package ImgUtils;
 
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Palette
   extends JPanel
@@ -36,6 +42,7 @@ curve while dragging a mouse. */
   Palette(BufferedImage bimg)
   {
     this.bimg=bimg;
+    // graphicsForDrawing = bimg.createGraphics();
     addMouseListener(this);
     addMouseMotionListener(this);
   }
@@ -83,7 +90,7 @@ corner of the applet, allowing for a 3-pixel border. */
     g.fillRect(width - 53, height - 53, 50, 50);
     g.setColor(Color.BLACK);
     g.drawRect(width - 53, height - 53, 49, 49);
-    g.drawString("CLEAR", width - 48, height - 23);
+    g.drawString("SAVE", width - 48, height - 23);
 
     /* Draw the seven color rectangles. */
 
@@ -200,6 +207,27 @@ new drawing color.  */
    * Change the current color, clear the drawing, or start drawing a curve.
    * (Or do nothing if user clicks on the border.)
    */
+  void save(){
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setFileFilter(filter);
+    fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+    int result = fileChooser.showOpenDialog(this);
+    if (result == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        // System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        BufferedImage bImg = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D cg = bImg.createGraphics();
+        this.paintAll(cg);
+        try{
+            File outputfile = new File(selectedFile.getAbsolutePath());
+            ImageIO.write(bImg, "png", outputfile);
+        }
+        catch (IOException e){
+            System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!");
+        }
+    }
+  }
   public void mousePressed(MouseEvent evt) {
     int x = evt.getX(); // x-coordinate where the user clicked.
     int y = evt.getY(); // y-coordinate where the user clicked.
@@ -217,8 +245,8 @@ new drawing color.  */
       // User clicked to the right of the drawing area.
       // This click is either on the clear button or
       // on the color palette.
-      if (y > height - 53) repaint(); //  Clicked on "CLEAR button".
-    //   else if(y>(height - 53*4)&&(y< height - 53*5)){//save}
+      if (y > height - 53) this.save(); //  Clicked on "SAVE button".
+    //   else if(y>(height - 53*4)&&(y< height - 53*5)){this.save();} //save
       else changeColor(y); // Clicked on the color palette.
     } else if (x > 3 && x < width - 56 && y > 3 && y < height - 3) {
       // The user has clicked on the white drawing area.
@@ -238,6 +266,7 @@ new drawing color.  */
   public void mouseReleased(MouseEvent evt) {
     if (dragging == false) return; // Nothing to do because the user isn't drawing.
     dragging = false;
+    graphicsForDrawing.drawImage(bimg,0,0,null);
     graphicsForDrawing.dispose();
     graphicsForDrawing = null;
   }
