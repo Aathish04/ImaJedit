@@ -52,19 +52,21 @@ public class MyCanvas {
 
       frame.setBounds(0, 0, width + 100, height + 50); //Sets the position of the frame
 
-      Container c = frame.getContentPane(); //Gets the content layer
+      //Container c = frame.getContentPane(); //Gets the content layer
 
       Graphics2D g = (Graphics2D) bimg.getGraphics();
-      g.setStroke(new BasicStroke(3));
-      g.setColor(Color.BLUE);
-      g.drawRect(10, 10, bimg.getWidth() - 20, bimg.getHeight() - 20);
+      // g.setStroke(new BasicStroke(3));
+      // g.setColor(Color.BLUE);
+      // g.drawRect(10, 10, bimg.getWidth() - 20, bimg.getHeight() - 20);
 
       JLabel label = new JLabel(new ImageIcon(bimg)); //JLabel Creation
       // label.setIcon(new ImageIcon(bimg)); //Sets the image to be displayed as an icon
       Dimension size = label.getPreferredSize(); //Gets the size of the image
       label.setBounds(0, 0, size.width, size.height); //Sets the location of the image
 
-      c.add(label); //Adds objects to the container
+      frame.add(label); //Adds objects to the frame
+      Palette content = new Palette(bimg);
+      frame.setContentPane(content);
       frame.setVisible(true); // Exhibit the frame
 
     //BufferedImage bi = getMyImage();
