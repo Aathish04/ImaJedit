@@ -26,6 +26,9 @@ public class MyCanvas {
     frame.setTitle("Add Image"); //Add the title to frame
     frame.setLayout(null); //Terminates default flow layout
     frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //Terminate program on close button
+    
+
+    // frame.setContentPane();
     int width = 1;
     int height = 1;
     BufferedImage bimg;
@@ -50,6 +53,11 @@ public class MyCanvas {
       frame.setBounds(0, 0, width + 100, height + 50); //Sets the position of the frame
 
       Container c = frame.getContentPane(); //Gets the content layer
+
+      Graphics2D g = (Graphics2D) bimg.getGraphics();
+      g.setStroke(new BasicStroke(3));
+      g.setColor(Color.BLUE);
+      g.drawRect(10, 10, bimg.getWidth() - 20, bimg.getHeight() - 20);
 
       JLabel label = new JLabel(new ImageIcon(bimg)); //JLabel Creation
       // label.setIcon(new ImageIcon(bimg)); //Sets the image to be displayed as an icon
