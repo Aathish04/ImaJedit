@@ -29,8 +29,8 @@ curve while dragging a mouse. */
 
   private boolean dragging; // This is set to true while the user is drawing.
 
-  private Graphics graphicsForDrawing; // A graphics context for the panel
-
+  private Graphics graphicsForDrawingOnScreen; // A graphics context for the panel
+  private Graphics bimgGraphics;
   // that is used to draw the user's curve.
 
   /**
@@ -42,7 +42,7 @@ curve while dragging a mouse. */
   Palette(BufferedImage bimg)
   {
     this.bimg=bimg;
-    // graphicsForDrawing = bimg.createGraphics();
+    // graphicsForDrawingOnScreen = bimg.createGraphics();
     addMouseListener(this);
     addMouseMotionListener(this);
   }
@@ -171,32 +171,57 @@ new drawing color.  */
 
   /**
    * This routine is called in mousePressed when the user clicks on the drawing area.
-   * It sets up the graphics context, graphicsForDrawing, to be used to draw the user's
+   * It sets up the graphics context, graphicsForDrawingOnScreen, to be used to draw the user's
    * sketch in the current color.
    */
   private void setUpDrawingGraphics() {
-    graphicsForDrawing = getGraphics();
+    bimgGraphics = bimg.getGraphics();
+    graphicsForDrawingOnScreen = getGraphics();
+
     switch (currentColor) {
       case BLACK:
-        graphicsForDrawing.setColor(Color.BLACK);
+        graphicsForDrawingOnScreen.setColor(Color.BLACK);
         break;
       case RED:
-        graphicsForDrawing.setColor(Color.RED);
+        graphicsForDrawingOnScreen.setColor(Color.RED);
         break;
       case GREEN:
-        graphicsForDrawing.setColor(Color.GREEN);
+        graphicsForDrawingOnScreen.setColor(Color.GREEN);
         break;
       case BLUE:
-        graphicsForDrawing.setColor(Color.BLUE);
+        graphicsForDrawingOnScreen.setColor(Color.BLUE);
         break;
       case CYAN:
-        graphicsForDrawing.setColor(Color.CYAN);
+        graphicsForDrawingOnScreen.setColor(Color.CYAN);
         break;
       case MAGENTA:
-        graphicsForDrawing.setColor(Color.MAGENTA);
+        graphicsForDrawingOnScreen.setColor(Color.MAGENTA);
         break;
       case YELLOW:
-        graphicsForDrawing.setColor(Color.YELLOW);
+        graphicsForDrawingOnScreen.setColor(Color.YELLOW);
+        break;
+    }
+    switch (currentColor) {
+      case BLACK:
+        bimgGraphics.setColor(Color.BLACK);
+        break;
+      case RED:
+        bimgGraphics.setColor(Color.RED);
+        break;
+      case GREEN:
+        bimgGraphics.setColor(Color.GREEN);
+        break;
+      case BLUE:
+        bimgGraphics.setColor(Color.BLUE);
+        break;
+      case CYAN:
+        bimgGraphics.setColor(Color.CYAN);
+        break;
+      case MAGENTA:
+        bimgGraphics.setColor(Color.MAGENTA);
+        break;
+      case YELLOW:
+        bimgGraphics.setColor(Color.YELLOW);
         break;
     }
   } // end setUpDrawingGraphics()
@@ -212,16 +237,16 @@ new drawing color.  */
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setFileFilter(filter);
     fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-    int result = fileChooser.showOpenDialog(this);
+    int result = fileChooser.showSaveDialog(this);
     if (result == JFileChooser.APPROVE_OPTION) {
         File selectedFile = fileChooser.getSelectedFile();
         // System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-        BufferedImage bImg = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
-        Graphics2D cg = bImg.createGraphics();
-        this.paintAll(cg);
+        // BufferedImage bImg = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+        // Graphics2D cg = bImg.createGraphics();
+        // this.paintAll(cg);
         try{
             File outputfile = new File(selectedFile.getAbsolutePath());
-            ImageIO.write(bImg, "png", outputfile);
+            ImageIO.write(bimg, "png", outputfile);
         }
         catch (IOException e){
             System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!");
@@ -266,9 +291,11 @@ new drawing color.  */
   public void mouseReleased(MouseEvent evt) {
     if (dragging == false) return; // Nothing to do because the user isn't drawing.
     dragging = false;
-    graphicsForDrawing.drawImage(bimg,0,0,null);
-    graphicsForDrawing.dispose();
-    graphicsForDrawing = null;
+  
+    bimgGraphics.dispose();
+    graphicsForDrawingOnScreen.dispose();
+    bimgGraphics = null;
+    graphicsForDrawingOnScreen = null;
   }
 
   /**
@@ -298,8 +325,8 @@ new drawing color.  */
     if (
       y > getHeight() - 4
     ) y = getHeight() - 4; //   the drawing area.
-
-    graphicsForDrawing.drawLine(prevX, prevY, x, y); // Draw the line.
+    bimgGraphics.drawLine(prevX, prevY, x, y); // Draw the line.
+    graphicsForDrawingOnScreen.drawLine(prevX, prevY, x, y); // Draw the line.
 
     prevX = x; // Get ready for the next line segment in the curve.
     prevY = y;
