@@ -112,6 +112,7 @@ public class MainMenu {
           System.out.println("The Image height is: "+imgheight);
           System.out.println("The Image width is: "+imgwidth);
           // TODO: Use the width and height values here to make a new canvas.
+          MyCanvas.ImageCanvasFrame(imgwidth,imgheight);
         }
       });
 

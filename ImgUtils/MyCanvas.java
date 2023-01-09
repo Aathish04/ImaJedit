@@ -21,6 +21,38 @@ public class MyCanvas {
     return dimg;
 }  
 
+  public static void ImageCanvasFrame(int width,int height) {
+    JFrame frame = new JFrame(); //JFrame Creation
+    frame.setTitle("Add Image"); //Add the title to frame
+    frame.setLayout(null); //Terminates default flow layout
+    frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //Terminate program on close button
+    
+
+    // frame.setContentPane();
+    BufferedImage bimg;
+
+    try {
+      bimg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+      frame.setBounds(0, 0, width + 100, height + 50); //Sets the position of the frame
+
+      Graphics2D    graphics = bimg.createGraphics();
+      graphics.setPaint (Color.WHITE);
+      graphics.fillRect ( 0, 0, bimg.getWidth(), bimg.getHeight() );
+
+      JLabel label = new JLabel(new ImageIcon(bimg)); //JLabel Creation
+      Dimension size = label.getPreferredSize(); //Gets the size of the image
+      label.setBounds(0, 0, size.width, size.height); //Sets the location of the image
+
+      // frame.add(label); //Adds objects to the frame
+      Palette content = new Palette(bimg);
+      frame.setContentPane(content);
+      frame.setVisible(true); // Exhibit the frame
+    } catch (Exception e) {
+      //never enters here
+      System.out.println(e);
+    }
+  }
   public static void ImageCanvasFrame(String path) {
     JFrame frame = new JFrame(); //JFrame Creation
     frame.setTitle("Add Image"); //Add the title to frame
@@ -70,8 +102,6 @@ public class MyCanvas {
       frame.setVisible(true); // Exhibit the frame
 
     //BufferedImage bi = getMyImage();
-      File outputfile = new File("saved.png");
-      ImageIO.write(bimg, "png", outputfile);
     } catch (Exception e) {
       //never enters here
       System.out.println(e);
