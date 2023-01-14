@@ -6,8 +6,6 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import ImgUtils.CONSTANTS;
-
 public class MyCanvas {
 
   public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
@@ -86,7 +84,7 @@ public class MyCanvas {
 
       //Container c = frame.getContentPane(); //Gets the content layer
 
-      Graphics2D g = (Graphics2D) bimg.getGraphics();
+      // Graphics2D g = (Graphics2D) bimg.getGraphics();
       // g.setStroke(new BasicStroke(3));
       // g.setColor(Color.BLUE);
       // g.drawRect(10, 10, bimg.getWidth() - 20, bimg.getHeight() - 20);

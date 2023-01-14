@@ -111,7 +111,6 @@ public class MainMenu {
           int imgheight = (int) heightSpinner.getValue();
           System.out.println("The Image height is: "+imgheight);
           System.out.println("The Image width is: "+imgwidth);
-          // TODO: Use the width and height values here to make a new canvas.
           MyCanvas.ImageCanvasFrame(imgwidth,imgheight);
         }
       });
@@ -135,7 +134,6 @@ public class MainMenu {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-            // TODO: OPEN IMAGE HERE
             MyCanvas.ImageCanvasFrame(selectedFile.getAbsolutePath());
         }
       }
