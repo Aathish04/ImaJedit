@@ -30,7 +30,7 @@ curve while dragging a mouse. */
 
   private boolean dragging; // This is set to true while the user is drawing.
 
-  private Graphics graphicsForDrawingOnScreen; // A graphics context for the panel
+  Graphics graphicsForDrawingOnScreen; // A graphics context for the panel
   Graphics2D bimgGraphics;
   // that is used to draw the user's curve.
 

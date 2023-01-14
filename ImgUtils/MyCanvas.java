@@ -6,6 +6,12 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
+
+import java.io.IOException;
+
 public class MyCanvas {
 
   static JFrame setDrawingMenuBar(JFrame frame, Palette palette){
@@ -25,6 +31,29 @@ public class MyCanvas {
     });
     pencilMenu.add(increasePencilSizeItem);
     pencilMenu.add(decreasePencilSizeItem);
+    JMenu PixelMenu = new JMenu("Resolution");
+    menuBar.add(PixelMenu);
+    JMenuItem Blur = new JMenuItem("Increase Blur");
+    Blur.addActionListener(e->{
+      BufferedImage bufferedImage = palette.bimg;
+      System.out.println(palette.bimg.getWidth()+palette.bimg.getHeight());
+      BufferedImage bufferedImage2=new BufferedImage(palette.bimg.getWidth(),palette.bimg.getHeight(),palette.bimg.getType());
+      palette.graphicsForDrawingOnScreen=palette.getGraphics();
+      bufferedImage2.getGraphics().drawImage(bufferedImage,0,0,null);
+
+      Kernel kernel = new Kernel(3, 3, new float[] { 1f / 9f, 1f / 9f, 1f / 9f,
+          1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f, 1f / 9f });
+      BufferedImageOp op = new ConvolveOp(kernel);
+
+      bufferedImage = op.filter(bufferedImage2, palette.bimg);
+      palette.graphicsForDrawingOnScreen.drawImage(palette.bimg,0,0,null);
+      palette.graphicsForDrawingOnScreen.dispose();
+
+    });
+
+    JMenuItem FillCanvas = new JMenuItem("Fill Canvas");
+    PixelMenu.add(Blur);
+    PixelMenu.add(FillCanvas);
     return frame;
   }
 
