@@ -52,6 +52,15 @@ public class MyCanvas {
     });
 
     JMenuItem FillCanvas = new JMenuItem("Fill Canvas");
+    FillCanvas.addActionListener(
+      e->{
+        palette.setUpDrawingGraphics();
+        palette.bimgGraphics.fillRect(0, 0, palette.bimg.getWidth(), palette.bimg.getHeight());
+        palette.graphicsForDrawingOnScreen.drawImage(palette.bimg,0,0,null);
+        palette.bimgGraphics.dispose();
+        palette.graphicsForDrawingOnScreen.dispose();
+      }
+    );
     PixelMenu.add(Blur);
     PixelMenu.add(FillCanvas);
     return frame;

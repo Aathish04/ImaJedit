@@ -174,7 +174,7 @@ new drawing color.  */
    * It sets up the graphics context to be used to draw the user's
    * sketch in the current color.
    */
-  private void setUpDrawingGraphics() {
+  void setUpDrawingGraphics() {
     graphicsForDrawingOnScreen = getGraphics();
     bimgGraphics = (Graphics2D) bimg.getGraphics();
     bimgGraphics.setStroke(new BasicStroke(strokeWidth));
