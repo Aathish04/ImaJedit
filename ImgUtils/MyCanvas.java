@@ -14,11 +14,15 @@ public class MyCanvas {
     JMenu pencilMenu = new JMenu("Pencil");
     menuBar.add(pencilMenu);
     JMenuItem increasePencilSizeItem = new JMenuItem("Increase Size");
-  //   increasePencilSizeItem.addActionListener(e -> {
-  //     // Perform action here when the menu item is clicked
-  //     palette
-  // });
+    increasePencilSizeItem.addActionListener(e -> {
+      palette.strokeWidth = palette.strokeWidth+1;
+    });
     JMenuItem decreasePencilSizeItem = new JMenuItem("Decrease Size");
+    decreasePencilSizeItem.addActionListener(e -> {
+      if(palette.strokeWidth>1){
+        palette.strokeWidth = palette.strokeWidth-1;
+      }
+    });
     pencilMenu.add(increasePencilSizeItem);
     pencilMenu.add(decreasePencilSizeItem);
     return frame;

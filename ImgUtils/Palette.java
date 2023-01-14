@@ -25,12 +25,13 @@ public class Palette
   /* The following variables are used when the user is sketching a
 curve while dragging a mouse. */
 
+  float strokeWidth=1;
   private int prevX, prevY; // The previous location of the mouse.
 
   private boolean dragging; // This is set to true while the user is drawing.
 
   private Graphics graphicsForDrawingOnScreen; // A graphics context for the panel
-  private Graphics bimgGraphics;
+  Graphics2D bimgGraphics;
   // that is used to draw the user's curve.
 
   /**
@@ -175,7 +176,8 @@ new drawing color.  */
    */
   private void setUpDrawingGraphics() {
     graphicsForDrawingOnScreen = getGraphics();
-    bimgGraphics = bimg.getGraphics();
+    bimgGraphics = (Graphics2D) bimg.getGraphics();
+    bimgGraphics.setStroke(new BasicStroke(strokeWidth));
     switch (currentColor) {
       case BLACK:
         bimgGraphics.setColor(Color.BLACK);
