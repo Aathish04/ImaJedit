@@ -42,7 +42,6 @@ curve while dragging a mouse. */
   Palette(BufferedImage bimg)
   {
     this.bimg=bimg;
-    // graphicsForDrawingOnScreen = bimg.createGraphics();
     addMouseListener(this);
     addMouseMotionListener(this);
   }
@@ -171,36 +170,12 @@ new drawing color.  */
 
   /**
    * This routine is called in mousePressed when the user clicks on the drawing area.
-   * It sets up the graphics context, graphicsForDrawingOnScreen, to be used to draw the user's
+   * It sets up the graphics context to be used to draw the user's
    * sketch in the current color.
    */
   private void setUpDrawingGraphics() {
-    bimgGraphics = bimg.getGraphics();
     graphicsForDrawingOnScreen = getGraphics();
-
-    switch (currentColor) {
-      case BLACK:
-        graphicsForDrawingOnScreen.setColor(Color.BLACK);
-        break;
-      case RED:
-        graphicsForDrawingOnScreen.setColor(Color.RED);
-        break;
-      case GREEN:
-        graphicsForDrawingOnScreen.setColor(Color.GREEN);
-        break;
-      case BLUE:
-        graphicsForDrawingOnScreen.setColor(Color.BLUE);
-        break;
-      case CYAN:
-        graphicsForDrawingOnScreen.setColor(Color.CYAN);
-        break;
-      case MAGENTA:
-        graphicsForDrawingOnScreen.setColor(Color.MAGENTA);
-        break;
-      case YELLOW:
-        graphicsForDrawingOnScreen.setColor(Color.YELLOW);
-        break;
-    }
+    bimgGraphics = bimg.getGraphics();
     switch (currentColor) {
       case BLACK:
         bimgGraphics.setColor(Color.BLACK);
@@ -326,8 +301,7 @@ new drawing color.  */
       y > getHeight() - 4
     ) y = getHeight() - 4; //   the drawing area.
     bimgGraphics.drawLine(prevX, prevY, x, y); // Draw the line.
-    graphicsForDrawingOnScreen.drawLine(prevX, prevY, x, y); // Draw the line.
-
+    graphicsForDrawingOnScreen.drawImage(bimg,0,0,null);
     prevX = x; // Get ready for the next line segment in the curve.
     prevY = y;
   } // end mouseDragged()

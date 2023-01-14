@@ -8,6 +8,22 @@ import javax.swing.*;
 
 public class MyCanvas {
 
+  static JFrame setDrawingMenuBar(JFrame frame, Palette palette){
+    JMenuBar menuBar = new JMenuBar();
+    frame.setJMenuBar(menuBar);
+    JMenu pencilMenu = new JMenu("Pencil");
+    menuBar.add(pencilMenu);
+    JMenuItem increasePencilSizeItem = new JMenuItem("Increase Size");
+  //   increasePencilSizeItem.addActionListener(e -> {
+  //     // Perform action here when the menu item is clicked
+  //     palette
+  // });
+    JMenuItem decreasePencilSizeItem = new JMenuItem("Decrease Size");
+    pencilMenu.add(increasePencilSizeItem);
+    pencilMenu.add(decreasePencilSizeItem);
+    return frame;
+  }
+
   public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
     Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
     BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
@@ -24,8 +40,6 @@ public class MyCanvas {
     frame.setTitle("Add Image"); //Add the title to frame
     frame.setLayout(null); //Terminates default flow layout
     frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //Terminate program on close button
-    
-
     // frame.setContentPane();
     BufferedImage bimg;
 
@@ -44,6 +58,8 @@ public class MyCanvas {
 
       // frame.add(label); //Adds objects to the frame
       Palette content = new Palette(bimg);
+      frame = setDrawingMenuBar(frame,content);
+      
       frame.setContentPane(content);
       frame.setVisible(true); // Exhibit the frame
     } catch (Exception e) {
@@ -96,6 +112,7 @@ public class MyCanvas {
 
       // frame.add(label); //Adds objects to the frame
       Palette content = new Palette(bimg);
+      frame = setDrawingMenuBar(frame,content);
       frame.setContentPane(content);
       frame.setVisible(true); // Exhibit the frame
 
